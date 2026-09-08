@@ -41,6 +41,22 @@ export const useMealStore = defineStore('meal', () => {
     ];
   }
 
+  function dispMeals() {
+    console.log(meals.value.map(m => `${m.day}: ${m.lunch} -- ${m.dinner}`).join('\r\n'));
+  }
+
+  function updateMeal(mealToUpdate: DayMeal) {
+    let m = meals.value.filter(_ => _.day == mealToUpdate.day);
+    if(m && m[0] && m[0]?.day) {
+      m[0].lunch = mealToUpdate.lunch;
+      m[0].lunchUrl = mealToUpdate.lunchUrl;
+      m[0].dinner = mealToUpdate.dinner;
+      m[0].dinnerUrl = mealToUpdate.dinnerUrl;
+    } else {
+      meals.value.push(mealToUpdate);
+    }
+  }
+
   function getForWeek(startDate: Date):DayMeal[] {
     let result: DayMeal[] = [];
     for(let i = 0; i < 7; i++) {
@@ -57,5 +73,5 @@ export const useMealStore = defineStore('meal', () => {
     return result;
   }
 
-  return { meals, DAY_FORMAT, getMeals, getForWeek }
+  return { meals, DAY_FORMAT, getMeals, getForWeek, updateMeal, dispMeals }
 })
