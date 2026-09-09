@@ -15,8 +15,10 @@ const curWeekStart = ref<Date>(startOfWeek(new Date(), { weekStartsOn: 1 }))
 const edit = (meal: DayMeal) => {
   console.log('EDIT', meal)
   meal.editMode = !(meal.editMode ?? false);
-  if(!meal.editMode)
+  if(!meal.editMode){
     mealStore.updateMeal(meal);
+    mealStore.sendUpdate(meal).then(() => { console.log("OK"); })
+  }
 }
 
 const formatDateDay = (d: string) => {
@@ -34,8 +36,10 @@ const curDateTop = () => {
 
 onMounted(() => {
   if (meals.value?.length == 0) {
-    mealStore.getMeals()
-    curWeekMeals.value = mealStore.getForWeek(curWeekStart.value)
+    mealStore.getMeals().then((m) => {
+      mealStore.setMeals(m);
+      curWeekMeals.value = mealStore.getForWeek(curWeekStart.value)
+    })
   }
 })
 </script>
