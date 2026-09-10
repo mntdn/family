@@ -76,7 +76,11 @@ app.post("/data", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+var args = process.argv.slice(2);
+console.log(args)
+var host = args.length > 0 ? args[0] : 'localhost';
+
+app.listen(PORT, host, () => {
   console.log(`Server running at http://localhost:${PORT}`);
   console.log(`  GET  /data  -> read data.json`);
   console.log(`  POST  /data  -> update data.json (send JSON body)`);
