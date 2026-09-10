@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js 0.0.0.0"
+    "start": "node app.js 0.0.0.0",
+    "server": "pm2 start app.js --name meal-planner-backend -- 0.0.0.0"
   },
   "keywords": [],
   "author": "",
